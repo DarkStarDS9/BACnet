@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO.BACnet.EventNotification;
+using System.IO.BACnet.EventNotification.EventValues;
 using System.IO.BACnet.Serialize;
 using System.Linq;
 using System.Net;
@@ -935,7 +936,7 @@ namespace System.IO.BACnet
             var b = GetEncodeBuffer(Transport.HeaderLength);
             NPDU.Encode(b, BacnetNpduControls.PriorityNormalMessage, address);
             APDU.EncodeUnconfirmedServiceRequest(b, BacnetPduTypes.PDU_TYPE_UNCONFIRMED_SERVICE_REQUEST, BacnetUnconfirmedServices.SERVICE_UNCONFIRMED_EVENT_NOTIFICATION);
-            Services.EncodeEventNotifyUnconfirmed(b, eventData);
+            Services.EncodeEventNotifyData(b, eventData);
             Transport.Send(b.buffer, Transport.HeaderLength, b.offset - Transport.HeaderLength, address, false, 0);
         }
 
